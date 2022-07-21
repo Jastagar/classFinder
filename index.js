@@ -1,6 +1,18 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const axios = require("axios")
+const mongo = require('mongoose')
+
+console.log(process.env.DATABASE_URL)
+
+mongo.connect(process.env.DATABASE_URL).then((res)=>{
+    
+    console.log("Connected");
+    console.log(res);
+}).catch((err)=>{
+    console.log("Error",err);
+})
 
 
 
@@ -11,10 +23,10 @@ app.use(express.static("public"))
 
 var dataArr = []
 
-axios.get("http://localhost:3009/schdule").then((res)=>{
-  console.log("data ready")
-  dataArr = res.data
-}).catch((err)=>{console.log(err);})
+// axios.get("http://localhost:3009/schdule").then((res)=>{
+//   console.log("data ready")
+//   dataArr = res.data
+// }).catch((err)=>{console.log(err);})
 
 // function syncReadFile(filename) {
 //   const contents = readFileSync(filename, 'utf-8');
