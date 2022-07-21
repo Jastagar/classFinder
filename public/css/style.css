@@ -1,0 +1,13 @@
+table, th, td {
+    /* border: 1px solid black; */
+  }
+td{
+    width: 10%;
+}
+.schdule{
+    height: 0;
+    overflow: hidden;
+}
+.autoHeight{
+    height: auto;
+}

@@ -1,0 +1,37 @@
+<% var classSpan = 0 %>
+<% var idOfTable = 1 %>
+<% for(let j=0;j<object.classes.length;j++) {%>
+    <% const con = object.classes[j] %> 
+    <% const usedClass = object.occupancy[classSpan] %>
+    <% const faculty = object.occupancy[classSpan+1] %>
+    <% const idCode = [group,con,usedClass,faculty].join("-") %>
+    <% if(con=="nl") {%>
+        <td class=<%= day + idOfTable++ %> style="background-color: green;"><%= idCode %></td>
+        <td class=<%= day + idOfTable++ %> style="background-color: green;"><%= idCode %></td>
+        <% classSpan+=2 %>
+    <% }else if(con=="pa") {%>
+        <td class=<%= day + idOfTable++ %> style="background-color: yellow;"><%= idCode %></td>
+        <td class=<%= day + idOfTable++ %> style="background-color: yellow;"><%= idCode %></td>
+        <td class=<%= day + idOfTable++ %> style="background-color: yellow;"><%= idCode %></td>
+        <% classSpan+=2 %>
+    <% }else if(con=="fd") {%>
+        <td class=<%= day + idOfTable++ %> style="background-color: red;"><%= idCode %></td>
+        <td class=<%= day + idOfTable++ %> style="background-color: red;"><%= idCode %></td>
+        <td class=<%= day + idOfTable++ %> style="background-color: red;"><%= idCode %></td>
+        <% classSpan+=2 %>
+    <% }else if(con=="2") {%>
+        <td class=<%= day + idOfTable++ %>></td>
+        <td class=<%= day + idOfTable++ %>></td>
+    <% }else if(con=="3") {%>
+        <td class=<%= day + idOfTable++ %>></td>
+        <td class=<%= day + idOfTable++ %>></td>
+        <td class=<%= day + idOfTable++ %>></td>
+    <% }else if(con=="4") {%>
+        <td class=<%= day + idOfTable++ %>></td>
+        <td class=<%= day + idOfTable++ %>></td>
+        <td class=<%= day + idOfTable++ %>></td>
+        <td class=<%= day + idOfTable++ %>></td>
+    <% }else{ %>
+        <td class=<%= day + idOfTable++ %>></td>
+    <% } %>
+<% } %>
