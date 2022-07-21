@@ -22,13 +22,16 @@ function handleGettingOccupiedClasses(){
     document.getElementById("tempans").innerHTML=""
     document.querySelectorAll(`.${query}`).forEach(e=>{
         if(e.innerText){
+            console.log(e.innerHTML);
             classesInUse.push(e.innerText.split("-")[2])
         }
     })
-    let res = classesInUse.filter(x =>
+    let res = allClassesEverUsed.filter(x =>
     {
-        return allClassesEverUsed.find(x)!== -1
+        return classesInUse.indexOf(x)=== -1
     });
-    console.log(classesInUse)
+    
+    console.log(allClassesEverUsed.sort())
+    console.log(classesInUse.sort())
     console.log(res)
 }
