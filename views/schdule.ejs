@@ -11,12 +11,18 @@
 </head>
 <body>
     <div id="root">
-        
-        
         <div class="container">
             <div class="d-flex align-items-center flex-column text-center">
-                <div class="col-md-4 my-4">
-                    <select class="my-2" id="inputQuery" required>
+                <div class="col-md-4 my-2">
+                    <select class="my-3 w-100" id="dayQuery" required>                        
+                        <option value="">Today</option>
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                    </select>
+                    <select class="my-3 w-100" id="inputQuery" required>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -27,17 +33,14 @@
                         <option value="8">8</option>
                         <option value="9">9</option>
                     </select>
-
                     <button onclick="handleGettingOccupiedClasses()" class="getData btn btn-dark w-75">Get list of occupied classes</button>
                 </div>
-                <div class="crossBtn col-md-4 my-4">
-                    <button onclick="handleToggleSchdule()" class="btn btn-primary w-75">
-                        ToggleSchdule
-                    </button>
+                <div class="crossBtn col-md-4 my-2">
+                    <button onclick="handleToggleSchdule()" class="btn btn-primary w-75">ToggleSchdule</button>
                 </div>
             </div>
         </div>
-        <div id="tempans"></div>
+        <div class="container ShowArea"></div>
         <div class="container schdule">
             <% for(let i=0;i<dataArr.length;i++) {%>
                 <h1 style="text-align: center;text-transform: capitalize;">Class <%= dataArr[i].class %></h1>

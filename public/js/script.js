@@ -11,18 +11,17 @@ function handleToggleSchdule(){
         schduleContiner.classList.add("autoHeight")
     }
 }
-console.log(days)
 function handleGettingOccupiedClasses(){
-    const dayToday = new Date().getDay()
+    const dayQuery = document.querySelector("#dayQuery").value
+    var dayToday =''
+    dayQuery? dayToday = dayQuery:dayToday = new Date().getDay()
     const classesInUse = []
-    console.log(days.dayToday);
-    console.log("Form Submitted")
     
     const query = days[dayToday] + document.getElementById("inputQuery").value
-    document.getElementById("tempans").innerHTML=""
+    const showBox = document.querySelector(".ShowArea")
+    showBox.innerHTML=""
     document.querySelectorAll(`.${query}`).forEach(e=>{
         if(e.innerText){
-            console.log(e.innerHTML);
             classesInUse.push(e.innerText.split("-")[2])
         }
     })
@@ -30,8 +29,10 @@ function handleGettingOccupiedClasses(){
     {
         return classesInUse.indexOf(x)=== -1
     });
-    
-    console.log(allClassesEverUsed.sort())
-    console.log(classesInUse.sort())
-    console.log(res)
+    if(res.length){
+       showBox.innerHTML = "<h3>Classes<br> <strong>TG-" + res.join(",<br> TG-") + "</strong> <br>are not Occupied</h3>"
+    }else{
+       showBox.innerHTML = "5th 4th and 3rd floor are all occupied<br><br>Circle 1 chale jao"
+    }
+    res=[]
 }

@@ -7,7 +7,7 @@ const axios = require("axios")
 app.set('view engine',"ejs")
 app.use(express.static("public"))
 
-// const {readFileSync} = require('fs');
+const {readFileSync} = require('fs');
 
 var dataArr = []
 
@@ -16,43 +16,43 @@ axios.get("http://localhost:3009/schdule").then((res)=>{
   dataArr = res.data
 }).catch((err)=>{console.log(err);})
 
-// function syncReadFile(filename) {
-//   const contents = readFileSync(filename, 'utf-8');
+function syncReadFile(filename) {
+  const contents = readFileSync(filename, 'utf-8');
 
-//   const arr = contents.split(/\r?\n/);
+  const arr = contents.split(/\r?\n/);
 
-//   for(let i=0;i<264;i+=11){
-//     var dataValue = {
-//       class:arr[i],
-//       monday:{
-//         classes:arr[i+1].split(" "),
-//         occupancy:arr[i+2].split(" ")
-//       },
-//       tuesday:{
-//         classes:arr[i+3].split(" "),
-//         occupancy:arr[i+4].split(" ")
-//       },
-//       wednesday:{
-//         classes:arr[i+5].split(" "),
-//         occupancy:arr[i+6].split(" ")
-//       },
-//       thursday:{
-//         classes:arr[i+7].split(" "),
-//         occupancy:arr[i+8].split(" ")
-//       },
-//       friday:{
-//         classes:arr[i+9].split(" "),
-//         occupancy:arr[i+10].split(" ")
-//       },
-//     }
-//     dataArr.push(dataValue)
-//   }
-//   return contents;
+  for(let i=0;i<264;i+=11){
+    var dataValue = {
+      class:arr[i],
+      monday:{
+        classes:arr[i+1].split(" "),
+        occupancy:arr[i+2].split(" ")
+      },
+      tuesday:{
+        classes:arr[i+3].split(" "),
+        occupancy:arr[i+4].split(" ")
+      },
+      wednesday:{
+        classes:arr[i+5].split(" "),
+        occupancy:arr[i+6].split(" ")
+      },
+      thursday:{
+        classes:arr[i+7].split(" "),
+        occupancy:arr[i+8].split(" ")
+      },
+      friday:{
+        classes:arr[i+9].split(" "),
+        occupancy:arr[i+10].split(" ")
+      },
+    }
+    dataArr.push(dataValue)
+  }
+  return contents;
 
-// }
-// dataArr = JSON.stringify(dataArr)
+}
+dataArr = JSON.stringify(dataArr)
 app.get("/schdule",(req,res)=>{
-    // const data = syncReadFile('./dataForClassFinder.txt');
+    const data = syncReadFile('./dataForClassFinder.txt');
     res.render('schdule',{dataArr})
 })
 app.get("/",(req,res)=>{

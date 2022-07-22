@@ -11,3 +11,8 @@ td{
 .autoHeight{
     height: auto;
 }
+.ShowArea{
+    min-height: 40vh;
+    width: 100%;
+    border: 3px solid;
+}
