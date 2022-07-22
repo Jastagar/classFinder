@@ -4,6 +4,7 @@ const app = express()
 const fs = require("fs")
 
 const dataContent = fs.readFileSync("./data.json").toString()
+const eachDaySchdule = fs.readFileSync("./daily.json").toString()
 const parsedData = JSON.parse(dataContent)
 
 app.set('view engine',"ejs")
@@ -14,7 +15,7 @@ app.get("/schdule",(req,res)=>{
     res.render('schdule',{dataArr:parsedData})
 })
 app.get("/",(req,res)=>{
-    res.render("index")
+    res.render("index",{eachDaySchdule})
 })
 
 

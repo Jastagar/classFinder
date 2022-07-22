@@ -1,6 +1,4 @@
-table, th, td {
-    /* border: 1px solid black; */
-  }
+
 body{
     font-size: 2rem;
 }
@@ -8,7 +6,6 @@ td{
     width: 10%;
 }
 .schdule{
-    height: 0;
     overflow: hidden;
 }
 .autoHeight{
@@ -18,8 +15,4 @@ td{
     min-height: 40vh;
     width: 100%;
     border: 3px solid;
-}
-.ShowArea + button{
-    font-size: 1.5rem;
-    width: 90px;
 }
