@@ -51,12 +51,15 @@ function handleClear(){
     showBox.innerHTML=''
 }
 function handleGettingOccupiedClasses(){
-    const dayQuery = document.querySelector("#dayQuery").value
-    if(dayQuery) {dayToday = dayQuery}
-    const query = days[dayToday] + document.getElementById("inputQuery").value
+    var dayQuery = document.querySelector("#dayQuery").value
+    if(dayQuery==="today"){dayQuery=dayToday}
+    console.log(dayQuery);
+    const query = days[dayQuery] + document.getElementById("inputQuery").value
     console.log(query);
-    console.log(query);
-    const classesInUse = eachDaySchdule[9*(dayToday-1)][query]
+    const numberForQuery = 9*(dayQuery-1) + parseInt(document.getElementById("inputQuery").value)-1
+    console.log(numberForQuery)
+    console.log(eachDaySchdule)
+    const classesInUse = eachDaySchdule[numberForQuery][query]
     console.log(classesInUse)
     const mappedCIUarray = classesInUse.map((e)=>{
         return e.split("-")[2]
