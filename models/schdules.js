@@ -8,4 +8,12 @@ const schdule = new mongoose.Schema(
         thursday: {classes: [],occupancy: []},
         friday: {classes: [],occupancy: []}
 })
-mongoose.model("Schdule",schdule)
+
+schdule.set("toJSON",{
+    transform:(document,returnedObject)=>{
+        delete returnedObject._id
+    }
+})
+
+
+module.exports = mongoose.model("Schdule",schdule)
