@@ -75,20 +75,23 @@ function handleClear(){
 function handleStudentFind(){
     const queryRL = document.getElementById("studentRollnumber").value
     if(!queryRL) {
-        showBox.innerHTML=" Koi number toh daal toh do phele :|"
+        showBox.innerHTML=" Koi number toh daal do phele :|"
         return
     }
     const found = studentsData.find((each)=>{
         return each.rollnumber === queryRL
     })
-    const classData = getQuery(dayToday,getNowPeriod())
     if(found){
-        const groupRex = new RegExp(found.group,"i")
-        const studentsClassInfo = classData.find((each)=>{
-            const ret = each.match(groupRex)
-            return ret
-        })
-        if(!studentsClassInfo){
+        var studentsClassInfo =[] 
+        if(getNowPeriod()){
+            const classData = getQuery(dayToday,getNowPeriod())
+            const groupRex = new RegExp(found.group,"i")
+            studentsClassInfo = classData.find((each)=>{
+                const ret = each.match(groupRex)
+                return ret
+            })
+        }
+        if(!studentsClassInfo.length){
             showBox.innerHTML = "This Student has a free period now, no further data available<br><br> &nbsp;&nbsp; KHUD DONDO LO :)"
             return
         }
@@ -97,9 +100,13 @@ function handleStudentFind(){
         Name: ${found.name}<br>
         RollNumber: ${found.rollnumber}<br>
         Group: ${found.group}<br>
-        This student should be in his/her class of: ${officialNamesForSubjects[subject][0]} in <br> ClassNumber TG-${classNumber}<br>
-        by Faculty no: ${FCnumber}<br>
         `
+        if(getNowPeriod()){
+            showBox.innerHTML += `
+            This student should be in his/her class of: ${officialNamesForSubjects[subject][0]} in <br> ClassNumber TG-${classNumber}<br>
+            by Faculty no: ${FCnumber}<br>
+            `
+        }
     }else{
         showBox.innerHTML = "Please Check the number again"
     }
