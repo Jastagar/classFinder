@@ -8,6 +8,8 @@ const showBox = document.querySelector(".ShowArea")
 const timeNow = new Date()
 const secNow = timeNow.getHours()*3600 + timeNow.getMinutes()*60
 var dayToday = new Date().getDay()
+
+
 function getNowPeriod() {
     if(secNow>=32400 && secNow<35400) return '1'
     else if(secNow>=35400 && secNow<38400) return '2'
@@ -23,22 +25,21 @@ function getNowPeriod() {
 
 function handleQuickFind(){
     
-    const classesInUse = []
+    const numberForQuery = ((dayToday-1)*9) + parseInt(getNowPeriod())-1
     const query = days[dayToday] + getNowPeriod()
+    const classesInUse = eachDaySchdule[numberForQuery][query]
     if(!getNowPeriod()){
         showBox.innerHTML=""
         showBox.innerHTML="<h1>You are not in Working Hour</h1>"
         return
     }
     showBox.innerHTML=""
-    document.querySelectorAll(`.${query}`).forEach(e=>{
-        if(e.innerText){
-            classesInUse.push(e.innerText.split("-")[2])
-        }
+    const mappedCIUarray = classesInUse.map((e)=>{
+        return e.split("-")[2]
     })
     let res = allClassesEverUsed.filter(x =>
     {
-        return classesInUse.indexOf(x)=== -1
+        return mappedCIUarray.indexOf(x)=== -1
     });
     if(res.length){
        showBox.innerHTML = "<h3>Classes<br> <strong>TG-" + res.join(",<br> TG-") + "</strong> <br>are not Occupied</h3>"
@@ -53,14 +54,9 @@ function handleClear(){
 function handleGettingOccupiedClasses(){
     var dayQuery = document.querySelector("#dayQuery").value
     if(dayQuery==="today"){dayQuery=dayToday}
-    console.log(dayQuery);
     const query = days[dayQuery] + document.getElementById("inputQuery").value
-    console.log(query);
     const numberForQuery = 9*(dayQuery-1) + parseInt(document.getElementById("inputQuery").value)-1
-    console.log(numberForQuery)
-    console.log(eachDaySchdule)
     const classesInUse = eachDaySchdule[numberForQuery][query]
-    console.log(classesInUse)
     const mappedCIUarray = classesInUse.map((e)=>{
         return e.split("-")[2]
     })
