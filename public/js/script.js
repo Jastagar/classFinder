@@ -15,7 +15,7 @@ const secNow = timeNow.getHours()*3600 + timeNow.getMinutes()*60
 var dayToday = new Date().getDay()
 var defaultPeriod = false
 
-
+// testingFunctionSetDay("1","4")
 
 function testingFunctionSetDay(day,period){
     dayToday = day;
@@ -82,7 +82,7 @@ function handleStudentFind(){
         return each.rollnumber === queryRL
     })
     if(found){
-        var studentsClassInfo =[] 
+        var studentsClassInfo
         if(getNowPeriod()){
             const classData = getQuery(dayToday,getNowPeriod())
             const groupRex = new RegExp(found.group,"i")
@@ -91,8 +91,13 @@ function handleStudentFind(){
                 return ret
             })
         }
-        if(!studentsClassInfo.length){
-            showBox.innerHTML = "This Student has a free period now, no further data available<br><br> &nbsp;&nbsp; KHUD DONDO LO :)"
+        if(!studentsClassInfo){
+            showBox.innerHTML = `
+            Name: ${found.name}<br>
+            RollNumber: ${found.rollnumber}<br>
+            Group: ${found.group}<br>
+            This Student has a free period now, no further data available<br><br> &nbsp;&nbsp; KHUD DONDO LO :)
+            `
             return
         }
         var [group,subject,classNumber,FCnumber] = studentsClassInfo.split("-")
@@ -100,13 +105,9 @@ function handleStudentFind(){
         Name: ${found.name}<br>
         RollNumber: ${found.rollnumber}<br>
         Group: ${found.group}<br>
+        This student should be in his/her class of: ${officialNamesForSubjects[subject][0]} in <br> ClassNumber TG-${classNumber}<br>
+        by Faculty no: ${FCnumber}<br>
         `
-        if(getNowPeriod()){
-            showBox.innerHTML += `
-            This student should be in his/her class of: ${officialNamesForSubjects[subject][0]} in <br> ClassNumber TG-${classNumber}<br>
-            by Faculty no: ${FCnumber}<br>
-            `
-        }
     }else{
         showBox.innerHTML = "Please Check the number again"
     }
