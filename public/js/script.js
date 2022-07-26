@@ -1,4 +1,5 @@
 const schduleContiner = document.querySelector(".schdule")
+const studentRollnumberSubmit = document.getElementById("studentRollnumberSubmit")
 const crossBtn = document.querySelector(".crossBtn button")
 const findStudentBtn = document.querySelector(".getData")
 const days = ["Sunday","monday","tuesday","wednesday","thursday","friday"]
@@ -17,6 +18,8 @@ var defaultPeriod = false
 
 // testingFunctionSetDay("1","4")
 
+
+studentRollnumberSubmit.addEventListener("onsubmit",handleStudentFind)
 function testingFunctionSetDay(day,period){
     dayToday = day;
     defaultPeriod = period; 
@@ -41,7 +44,7 @@ function getQuery(day,period){
 function getOccupiedClasses(day,period){
     const numberForQuery = ((day-1)*9) + parseInt(period)-1
     const query = days[day] + period
-    console.log(query)
+    // console.log(query)
     const classesInUse = eachDaySchdule[numberForQuery][query]
     showBox.innerHTML=""
     const mappedCIUarray = classesInUse.map((e)=>{
@@ -72,11 +75,11 @@ function handleQuickFind(){
 function handleClear(){
     showBox.innerHTML=''
 }
-function handleStudentFind(){
+function handleStudentFind(event){
     const queryRL = document.getElementById("studentRollnumber").value
     if(!queryRL) {
         showBox.innerHTML=" Koi number toh daal do phele :|"
-        return
+        return false
     }
     const found = studentsData.find((each)=>{
         return each.rollnumber === queryRL
@@ -98,7 +101,7 @@ function handleStudentFind(){
             Group: ${found.group}<br>
             This Student has a free period now, no further data available<br><br> &nbsp;&nbsp; KHUD DONDO LO :)
             `
-            return
+            return false
         }
         var [group,subject,classNumber,FCnumber] = studentsClassInfo.split("-")
         showBox.innerHTML= `
@@ -108,13 +111,18 @@ function handleStudentFind(){
         This student should be in his/her class of: ${officialNamesForSubjects[subject][0]} in <br> ClassNumber TG-${classNumber}<br>
         by Faculty no: ${FCnumber}<br>
         `
+        return false
     }else{
         showBox.innerHTML = "Please Check the number again"
     }
+    return false
 }
 function handleQuickFindForNext(){
-    const nextPeriod = handleQuickFind()
-    displayResults(nextPeriod)
+    const period = handleQuickFind()[1]+1
+    const dayNumber = handleQuickFind()[0]+1
+    console.log(dayToday,period)
+    const nextQuery = getOccupiedClasses(dayToday,`${period}`)
+    displayResults(nextQuery)
 }
 function handleGettingOccupiedClasses(){
     var dayQuery = document.querySelector("#dayQuery").value

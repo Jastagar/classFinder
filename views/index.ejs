@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <script>
@@ -41,19 +42,18 @@
                             <option value="8">8</option>
                             <option value="9">9</option>
                         </select>
-
                         <button onclick="handleGettingOccupiedClasses()" class="getData btn btn-dark">Get free classes</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="p-3 h-100">
-                    <div class="h-100 d-flex flex-column justify-content-between border p-2">
+                    <div class="h-100 d-flex flex-column justify-content-between border p-2" id="studentRollnumberSubmit">
                         <fieldset>
-                            <label for="studentRollnumber">Find student by rollnumber</label>
+                            <label for="studentRollnumber">Find student by Roll Number :</label>
                             <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="">
                         </fieldset>
-                        <button onclick="handleStudentFind()" class="getData btn btn-dark">Find this student</button>
+                        <button type="submit" onclick="handleStudentFind()" class="getData btn btn-dark">Find this student</button>
                     </div>
                 </div>
             </div>

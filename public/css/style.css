@@ -6,7 +6,8 @@ td{
     width: 10%;
 }
 .schdule{
-    overflow: hidden;
+    overflow-x: hidden;
+    font-size: auto;
 }
 .autoHeight{
     height: auto;
