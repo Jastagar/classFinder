@@ -1,13 +1,28 @@
 
 body{
-    font-size: 1.5rem;
+    font-size: 2rem;
+    background: #e0e0e0;
+    font-family: cursive;
 }
 td{
     width: 10%;
 }
+h1{
+    font-size: 4rem;
+}
 .schdule{
     overflow-x: hidden;
     font-size: auto;
+}
+input{
+    border-top: none;
+    border-right: none;
+    background-color: #ff5252;
+}
+select{
+    border-top: none;
+    border-right: none;
+    background-color: #ff5252;
 }
 .autoHeight{
     height: auto;
@@ -15,5 +30,55 @@ td{
 .ShowArea{
     min-height: 40vh;
     width: 100%;
-    border: 3px solid;
+    padding: 5%;
+    /* border: 3px solid; */
+}
+.neoPlane{
+    padding: 5%;
+    border-radius: 5px;
+    background: #e0e0e0;
+    box-shadow:  20px 20px 60px #bebebe,
+                -20px -20px 60px #ffffff;
+}
+.neoPlane-inputBox{
+    overflow: hidden;
+    padding: 5%;
+    border-radius: 5px;
+    background: #ff5252;
+    box-shadow:  20px 20px 60px #bebebe,
+                -20px -20px 60px #ffffff;
+}
+.neoPlane-inputBox button{
+    border: none;
+    padding: 5%;
+    border-radius: 5px;
+    background: linear-gradient(145deg, #ff5858, #e64a4a);
+    box-shadow:  20px 20px 60px #d94646,
+                -20px -20px 60px #ff5e5e;
+}
+.displayCtrl button,a{
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(145deg, #ff5858, #e64a4a);
+    box-shadow:  20px 20px 60px #bebebe,
+    -20px -20px 60px #ffffff;
+}
+.neoConcave{
+    border-radius: 5px;
+    background: #e0e0e0;
+    box-shadow: inset 20px 20px 60px #bebebe,
+                inset -20px -20px 60px #ffffff;
+}
+.neoConvex{
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+    box-shadow:  20px 20px 60px #bebebe,
+                -20px -20px 60px #ffffff;
+}
+.neoConvex:active{
+    border-radius: 5px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  20px 20px 60px #bebebe,
+                 -20px -20px 60px #ffffff; 
 }

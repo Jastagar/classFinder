@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <script>
@@ -15,13 +15,13 @@
     <title>Chitkara Utility</title>
 </head>
 <body class="p-3">
-    <div class="container h-100">
+    <div class="container h-100 neoPlane">
         <h1 class="text-center p-5"> Made by Jastagar </h1>
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="p-3 h-100">
-                    <div class="h-100 d-flex flex-column justify-content-between border p-2">
-                        <label for="selectDay">Specify the day</label>
+                    <div class="h-100 d-flex flex-column justify-content-between neoPlane-inputBox">
+                        <label for="dayQuery">Specify the day</label>
                         <select name="selectDay" class="my-3 w-100" id="dayQuery" required>                        
                             <option value="today">Today</option>
                             <option value="1">Monday</option>
@@ -30,7 +30,7 @@
                             <option value="4">Thursday</option>
                             <option value="5">Friday</option>
                         </select>
-                        <label for="selectPeriod">Specify the Lecture</label>
+                        <label for="inputQuery">Specify the Lecture</label>
                         <select name="selectPeriod" class="my-3 w-100" id="inputQuery" required>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -42,31 +42,37 @@
                             <option value="8">8</option>
                             <option value="9">9</option>
                         </select>
-                        <button onclick="handleGettingOccupiedClasses()" class="getData btn btn-dark">Get free classes</button>
+                        <button onclick="handleGettingOccupiedClasses()" class="getData btn">Get free classes</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="p-3 h-100">
-                    <div class="h-100 d-flex flex-column justify-content-between border p-2" id="studentRollnumberSubmit">
+                    <div class="h-100 d-flex flex-column justify-content-between neoPlane-inputBox" id="studentRollnumberSubmit">
                         <fieldset>
-                            <label for="studentRollnumber">Find student by Roll Number :</label>
-                            <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="">
+                            <label for="studentRollnumber">Find student by Roll Number</label>
+                            <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="201099">
                         </fieldset>
-                        <button type="submit" onclick="handleStudentFind()" class="getData btn btn-dark">Find this student</button>
+                        <button type="submit" onclick="handleStudentFind()" class="getData btn ">Find this student</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 h-100">
+                    <div class="h-100 d-flex flex-column justify-content-between neoPlane-inputBox">
+                        <p>Use quick find to get free classes now</p>
+                        <button onclick="handleQuickFind()" class="btn p-2">Quick Find</button>
+                        <button onclick="handleQuickFindForNext()" class="btn p-2">Quick Find For Next</button>
                     </div>
                 </div>
             </div>
         </div>
-            <div class="text-center p-3">
-                <p>Use quick find to get free classes now</p>
-                <button onclick="handleQuickFind()" class="btn btn-primary">Quick Find</button>
-                <button onclick="handleQuickFindForNext()" class="btn btn-primary">Quick Find For Next</button>
+        <div class="m-4 displayCtrl">
+            <div class="ShowArea neoConcave"></div>
+            <div class="p-3">
+                <button onclick="handleClear()" class="btn mx-3">&times; Clear</button>
+                <a class="btn mx-3" href="/schdule">See Schdule</a>
             </div>
-        <div>
-            <div class="ShowArea"></div>
-            <button onclick="handleClear()" class="btn btn-outline-danger">&times; Clear</button>
-            <a class="btn btn-outline-primary" href="/schdule">See Schdule</a>
         </div>
     </div>
 </body>
