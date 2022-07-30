@@ -15,12 +15,12 @@
     <title>Chitkara Utility</title>
 </head>
 <body class="p-3">
-    <div class="container h-100 neoPlane">
-        <h1 class="text-center p-5"> Made by Jastagar </h1>
+    <div class="container h-100">
+        <h1 class="text-center p-5">Made by Jastagar</h1>
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="p-3 h-100">
-                    <div class="h-100 d-flex flex-column justify-content-between neoPlane-inputBox">
+            <div class="col-md-4 py-3 py-md-0">
+                <div class="p-3 h-100 border shadow">
+                    <div class="h-100 d-flex flex-column justify-content-between">
                         <label for="dayQuery">Specify the day</label>
                         <select name="selectDay" class="my-3 w-100" id="dayQuery" required>                        
                             <option value="today">Today</option>
@@ -42,36 +42,36 @@
                             <option value="8">8</option>
                             <option value="9">9</option>
                         </select>
-                        <button onclick="handleGettingOccupiedClasses()" class="getData btn">Get free classes</button>
+                        <a href="#showArea" onclick="handleGettingOccupiedClasses()" class="getData btn btn-primary">Get free classes</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 h-100">
-                    <div class="h-100 d-flex flex-column justify-content-between neoPlane-inputBox" id="studentRollnumberSubmit">
+            <div class="col-md-4 py-3 py-md-0">
+                <div class="p-3 h-100 border shadow">
+                    <div class="h-100 d-flex flex-column justify-content-between" id="studentRollnumberSubmit">
                         <fieldset>
                             <label for="studentRollnumber">Find student by Roll Number</label>
                             <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="201099">
                         </fieldset>
-                        <button type="submit" onclick="handleStudentFind()" class="getData btn ">Find this student</button>
+                        <a type="submit" onclick="handleStudentFind()" class="getData btn btn-primary">Find this student</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 h-100">
-                    <div class="h-100 d-flex flex-column justify-content-between neoPlane-inputBox">
+            <div class="col-md-4 py-3 py-md-0">
+                <div class="p-3 h-100 border shadow">
+                    <div class="h-100 d-flex flex-column justify-content-between">
                         <p>Use quick find to get free classes now</p>
-                        <button onclick="handleQuickFind()" class="btn p-2">Quick Find</button>
-                        <button onclick="handleQuickFindForNext()" class="btn p-2">Quick Find For Next</button>
+                        <a href="#showArea" onclick="handleQuickFind()" class="btn btn-primary p-2 my-1">Quick Find</a>
+                        <a href="#showArea" onclick="handleQuickFindForNext()" class="btn btn-secondary p-2  my-1">Quick Find For Next</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="m-4 displayCtrl">
-            <div class="ShowArea neoConcave"></div>
-            <div class="p-3">
-                <button onclick="handleClear()" class="btn mx-3">&times; Clear</button>
-                <a class="btn mx-3" href="/schdule">See Schdule</a>
+            <div id="showArea" class="ShowArea neoConcave"></div>
+            <div class="p-3 d-flex justify-content-center">
+                <a onclick="handleClear()" class="btn btn-outline-danger col-6 col-md-4">&times; Clear</a>
+                <a class="btn btn-outline-success col-6 col-md-4" href="/schdule">See Schdule</a>
             </div>
         </div>
     </div>

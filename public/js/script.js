@@ -58,14 +58,14 @@ function getOccupiedClasses(day,period){
 }
 function displayResults(result){
     if(result.length){
-        showBox.innerHTML = "<h3>Classes<br> <strong>TG-" + result.join(",<br> TG-") + "</strong> <br>are not Occupied</h3>"
+        showBox.innerHTML = "<h3>Classes<br> <strong>TG-" + result.join(",<br> TG-") + "</strong> <br>should be free</h3>"
      }else{
         showBox.innerHTML = "5th 4th and 3rd floor are all occupied<br><br>Circle 1 chale jao"
      }
 }
 function handleQuickFind(){
     if(!getNowPeriod()){
-        showBox.innerHTML="<h1>You are not in Working Hour</h1>"
+        showBox.innerHTML="<h2>You are not in Working Hour</h2>"
         return []
     }
     const res = getOccupiedClasses(dayToday,getNowPeriod())
