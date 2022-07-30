@@ -50,8 +50,12 @@
                 <div class="p-3 h-100 border shadow">
                     <div class="h-100 d-flex flex-column justify-content-between" id="studentRollnumberSubmit">
                         <fieldset>
-                            <label for="studentRollnumber">Find student by Roll Number</label>
+                            <label for="studentRollnumber">by Roll Number</label>
                             <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="201099">
+                        </fieldset>or
+                        <fieldset>
+                            <label for="studentNameFind">by Name</label>
+                            <input class="my-3 w-100" type="text" name="studentNameFind" id="studentNameFind" value="">
                         </fieldset>
                         <a type="submit" onclick="handleStudentFind()" class="getData btn btn-primary">Find this student</a>
                     </div>
@@ -68,11 +72,11 @@
             </div>
         </div>
         <div class="m-4 displayCtrl">
-            <div id="showArea" class="ShowArea neoConcave"></div>
             <div class="p-3 d-flex justify-content-center">
                 <a onclick="handleClear()" class="btn btn-outline-danger col-6 col-md-4">&times; Clear</a>
                 <a class="btn btn-outline-success col-6 col-md-4" href="/schdule">See Schdule</a>
             </div>
+            <div id="showArea" class="ShowArea neoConcave"></div>
         </div>
     </div>
 </body>
