@@ -129,8 +129,11 @@ function handleStudentFind(event){
         }
     }else{
         const nameRegx = new RegExp(`^${queryN}`,"gi")
+        const serNameRegx = new RegExp(`${' '+queryN}`,"gi")
+        console.log(nameRegx)
+        console.log(serNameRegx)
         const found = studentsData.filter((each)=>{
-            if(each.name.toLowerCase().match(nameRegx)){return each}
+            if(each.name.toLowerCase().match(nameRegx) || each.name.toLowerCase().match(serNameRegx)){return each}
         })
         if(found.length === 1){
             const singleFound = found[0]
@@ -167,7 +170,8 @@ function handleStudentFind(event){
                 allNames.push(`<b>${each.name}</b> rollnumber <b>${each.rollnumber}</b> from <b>${each.group}</b><br><hr>`)
             })
             showBox.innerHTML = `
-            <h2>Be more specific with the name or use roll Number</h2>
+            <h2>Be more specific with the name or use roll Number</h2><br>
+            <h2>found ${found.length} students</h2><br>
             ${allNames.join('')}
             `
         }else{
