@@ -8,79 +8,106 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <script>
-        const eachDaySchdule = <%- eachDaySchdule %>;
-        const studentsData = <%- studentsData %>;
+        const eachDaySchdule = <%- JSON.stringify(eachDaySchdule) %>;
+        const studentsData = <%- JSON.stringify(studentsData) %>;
+        const dataArr = <%- JSON.stringify(dataArr) %>;
     </script>
     <script src="./js/script.js" defer></script>
+    <script src="./js/colapsebtn.js" defer></script>
     <title>Chitkara Utility</title>
 </head>
-<body class="p-3">
+<body id="body" class="p-3">
     <div class="container h-100">
-        <h1 class="text-center p-5">Made by Jastagar</h1>
         <div class="row justify-content-center">
-            <div class="col-md-4 py-3 py-md-0">
-                <div class="p-3 h-100 border shadow">
-                    <div class="h-100 d-flex flex-column justify-content-between">
-                        <label for="dayQuery">Specify the day</label>
-                        <select name="selectDay" class="my-3 w-100" id="dayQuery" required>                        
-                            <option value="today">Today</option>
-                            <option value="1">Monday</option>
-                            <option value="2">Tuesday</option>
-                            <option value="3">Wednesday</option>
-                            <option value="4">Thursday</option>
-                            <option value="5">Friday</option>
-                        </select>
-                        <label for="inputQuery">Specify the Lecture</label>
-                        <select name="selectPeriod" class="my-3 w-100" id="inputQuery" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                        </select>
-                        <a href="#showArea" onclick="handleGettingOccupiedClasses()" class="getData btn btn-primary">Get free classes</a>
+            <div class="col-sm-6 row flex-column align-items-center g-md-4">
+
+
+                <div class="py-3 py-md-0">
+                    <div class="p-3 h-100 border shadow">
+                        <div class="h-100 d-flex flex-column justify-content-between">
+                            <p>Use quick find to get free classes now</p>
+                            <a href="#showArea" onclick="handleQuickFind()" class="btn btn-primary majorButtons p-2 my-1 flex-grow-1">Quick Find</a>
+                            <a href="#showArea" onclick="handleQuickFindForNext()" class="btn btn-secondary majorButtons p-2 my-1 flex-grow-1">Quick Find For Next</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 py-3 py-md-0">
-                <div class="p-3 h-100 border shadow">
-                    <div class="h-100 d-flex flex-column justify-content-between" id="studentRollnumberSubmit">
-                        <fieldset>
-                            <label for="studentRollnumber">by Roll Number</label>
-                            <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="201099">
-                        </fieldset>or
-                        <fieldset>
-                            <label for="studentNameFind">by Name</label>
-                            <input class="my-3 w-100" type="text" name="studentNameFind" id="studentNameFind" value="">
-                        </fieldset>
-                        <a type="submit" onclick="handleStudentFind()" class="getData btn btn-primary">Find this student</a>
+
+                <div class="py-3 py-md-0">
+                    <div class="p-3 border shadow d-flex flex-column overflow-hidden">
+                        <button onclick="colapseSpecific()" id="specificFind" class="dropDownBtn btn w-100 border border-3">Specific Find</button>
+                        <div class="flex-column justify-content-between" id="specificFindForm">
+                            <label for="dayQuery">Specify the day</label>
+                            <select name="selectDay" class="my-3 w-100" id="dayQuery" required>                        
+                                <option value="today">Today</option>
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                            </select>
+                            <label for="inputQuery">Specify the Lecture</label>
+                            <select name="selectPeriod" class="my-3 w-100" id="inputQuery" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                            <a href="#showArea" onclick="handleGettingOccupiedClasses()" class="getData btn btn-primary">Get free classes</a>
+                        </div>
                     </div>
                 </div>
+
+                <div class="py-3 py-md-0">
+                    <div class="p-3 border shadow d-flex flex-column overflow-hidden">
+                        <button onclick="colapseStudent()" id="studentFind" class="dropDownBtn btn border border-3">Student Find</button>
+                        <div class="flex-column justify-content-between" id="studentFindForm">
+                            <fieldset>
+                                <label for="studentRollnumber">by Roll Number</label>
+                                <input class="my-3 w-100" type="number" name="studentRollnumber" id="studentRollnumber" value="201099">
+                            </fieldset>
+                            <fieldset>
+                                <label for="studentNameFind">by Name</label>
+                                <input class="my-3 w-100" type="text" name="studentNameFind" id="studentNameFind" value="">
+                            </fieldset>
+                            <a type="submit" onclick="handleStudentFind()" class="getData btn btn-primary">Find this student</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-3 py-md-0">
+                    <div class="p-3 border shadow flex-column overflow-hidden">
+                        <button onclick="colapseSchdule()" id="schdules" class="dropDownBtn btn w-100 border border-3">Schdules</button>
+                        <div class="row flex-row" id="schduleFindForm">
+                            <% for(let i=0;i<dataArr.length;i++) {%>
+                                <%- include('./schduleModal',{'dataArr': dataArr[i]})%>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="col-md-4 py-3 py-md-0">
-                <div class="p-3 h-100 border shadow">
-                    <div class="h-100 d-flex flex-column justify-content-between">
-                        <p>Use quick find to get free classes now</p>
-                        <a href="#showArea" onclick="handleQuickFind()" class="btn btn-primary majorButtons p-2 my-1 flex-grow-1">Quick Find</a>
-                        <a href="#showArea" onclick="handleQuickFindForNext()" class="btn btn-secondary majorButtons p-2 my-1 flex-grow-1">Quick Find For Next</a>
+            <div class="col-md-6">
+                <div class="m-4 displayCtrl h-100">
+                    <div class="p-3 d-flex justify-content-around">
+                        <a onclick="handleClear()" class="btn btn-outline-danger col-6 col-md-4">&times; Clear</a>
+                    </div>
+                    <div id="showArea" class="ShowArea neoConcave"></div>
+                    <div class="p-3 d-flex justify-content-around">
+                        <a onclick="handleClear()" class="btn btn-outline-danger col-6 col-md-4">&times; Clear</a>
+                        <a class="btn btn-outline-secondary" href="#body">Go to top</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="m-4 displayCtrl">
-            <div class="p-3 d-flex justify-content-around">
-                <a onclick="handleClear()" class="btn btn-outline-danger col-6 col-md-4">&times; Clear</a>
-                <a class="btn btn-outline-success col-6 col-md-4" href="/schdule">See Schdule</a>
-            </div>
-            <div id="showArea" class="ShowArea neoConcave"></div>
-            <div class="p-3 d-flex justify-content-center">
-                <a onclick="handleClear()" class="btn btn-outline-danger col-6 col-md-4">&times; Clear</a>
-            </div>
-        </div>
+
+        <h1 class="text-center p-5">Made by Jastagar</h1>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

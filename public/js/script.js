@@ -8,7 +8,7 @@ const showBox = document.querySelector(".ShowArea")
 const officialNamesForSubjects = {
     nl:["NALR","Numerical Ability and Logical Reasonging"],
     pa:["PA","Programming Abstractions"],
-    fd:["F& D","Frontend Web Development"]
+    fd:["F& D","Frontend Web Development"],
 }
 
 const timeNow = new Date()
@@ -18,8 +18,6 @@ var defaultPeriod = false
 
 // testingFunctionSetDay("1","4")
 
-
-studentRollnumberSubmit.addEventListener("onsubmit",handleStudentFind)
 function testingFunctionSetDay(day,period){
     dayToday = day;
     defaultPeriod = period; 
@@ -42,7 +40,6 @@ function getQuery(day,period){
     return eachDaySchdule[numberForQuery][query]
 }
 function getOccupiedClasses(day,period){
-    console.log(days)
     if(days[dayToday] === "Sunday"){
         showBox.innerHTML = `Its Sunday, no classes today :) `
         return
@@ -53,7 +50,6 @@ function getOccupiedClasses(day,period){
     }
     const numberForQuery = ((day-1)*9) + parseInt(period)-1
     const query = days[day] + period
-    // console.log(query)
     const classesInUse = eachDaySchdule[numberForQuery][query]
     showBox.innerHTML=""
     const mappedCIUarray = classesInUse.map((e)=>{
@@ -87,12 +83,11 @@ function handleClear(){
 function handleStudentFind(event){
     const queryRL = document.getElementById("studentRollnumber").value
     const queryN = document.getElementById("studentNameFind").value
-
-    if(!queryRL || !queryN) {
+    if((!queryRL || queryRL==="201099") && !queryN) {
         showBox.innerHTML=" Koi number ya naam toh daal do phele :|"
         return false
     }
-    if(queryRL!=="201099"){
+    if(queryRL!=="201099" || !queryRL){
         const found = studentsData.find((each)=>{
             return each.rollnumber === queryRL
         })
@@ -130,8 +125,6 @@ function handleStudentFind(event){
     }else{
         const nameRegx = new RegExp(`^${queryN}`,"gi")
         const serNameRegx = new RegExp(`${' '+queryN}`,"gi")
-        console.log(nameRegx)
-        console.log(serNameRegx)
         const found = studentsData.filter((each)=>{
             if(each.name.toLowerCase().match(nameRegx) || each.name.toLowerCase().match(serNameRegx)){return each}
         })
@@ -182,7 +175,6 @@ function handleStudentFind(event){
 function handleQuickFindForNext(){
     const period = handleQuickFind()[1]+1
     const dayNumber = handleQuickFind()[0]+1
-    console.log(dayToday,period)
     const nextQuery = getOccupiedClasses(dayToday,`${period}`)
     displayResults(nextQuery)
 }
@@ -200,5 +192,4 @@ function handleGettingOccupiedClasses(){
     if(dayQuery==="today"){dayQuery=dayToday}
     const res = getOccupiedClasses(dayQuery,periodValue)
     displayResults(res)
-    res=[]
 }
