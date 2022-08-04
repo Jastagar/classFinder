@@ -44,3 +44,11 @@ h1{
 #schduleFindForm, #studentFindForm, #specificFindForm{
     display: none;
 }
+.schduleImage{
+    height: 70vh;
+}
+@media screen and (max-width:600px) {
+    .schduleImage{
+        height: 30vh;
+    }    
+}

@@ -1,4 +1,4 @@
-<div class="col-md-4 p-1">
+<div class="col-4 col-md-2 col-xxl-1 p-1">
 <button type="button" style='text-transform: capitalize;' class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal<%= dataArr.class %>">
     <%= dataArr.class%>
 </button>
@@ -9,7 +9,9 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <img class="w-100" style="height: 70vh;" src="/img/<%= dataArr.class %>.png">
+          <a href="/img/<%= dataArr.class %>.png">
+            <img class="w-100 schduleImage" src="/img/<%= dataArr.class %>.png">
+          </a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
