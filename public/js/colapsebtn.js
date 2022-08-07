@@ -1,7 +1,3 @@
-const specificFindBtn = document.getElementById('specificFind')
-const studentFindBtn = document.getElementById('studentFind')
-const schduleFindBtn = document.getElementById('schdules')
-
 const specificFindForm = document.getElementById('specificFindForm')
 const studentFindForm = document.getElementById('studentFindForm')
 const schduleFindForm = document.getElementById('schduleFindForm')

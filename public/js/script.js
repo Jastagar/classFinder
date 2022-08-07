@@ -16,7 +16,7 @@ const secNow = timeNow.getHours()*3600 + timeNow.getMinutes()*60
 var dayToday = new Date().getDay()
 var defaultPeriod = false
 
-// testingFunctionSetDay("1","4")
+testingFunctionSetDay("1","4")
 
 function testingFunctionSetDay(day,period){
     dayToday = day;
