@@ -8,23 +8,25 @@ const Students = require("./models/student")
 const cors = require('cors')
 const apiHandler = require('./controller/api')
 
-var dataArr;
-var eachDaySchdule;
-var studentsData;
-mongoose.connect(process.env.DATABASE_URL).then(async ()=>{
-    console.log("Connected to Database on Mongo")
-    console.log("Assigning data...")
-    dataArr = await Scdhule.find({});
-    eachDaySchdule = await Daily.find({});
-    studentsData = await Students.find({});
-    console.log("Data Assigned")
-    dataArr = dataArr.sort((a,b)=>{
-        return (a.class.slice(1) - b.class.slice(1))
+async function getData(){
+    var dataArr;
+    var eachDaySchdule;
+    var studentsData;
+    await mongoose.connect(process.env.DATABASE_URL).then(async ()=>{
+        console.log("Connected to Database on Mongo")
+        console.log("Assigning data...")
+        dataArr = await Scdhule.find({});
+        eachDaySchdule = await Daily.find({});
+        studentsData = await Students.find({});
+        console.log("Data Assigned")
+        dataArr = dataArr.sort((a,b)=>{
+            return (a.class.slice(1) - b.class.slice(1))
+        })
+    }).catch((err)=>{
+        console.log("\nError Connecting to the DataBase:\n\n\n",err)
     })
-}).catch((err)=>{
-    console.log("\nError Connecting to the DataBase:\n\n\n",err)
-})
-
+}
+getData()
 
 
 app.use(express.static('build'))
