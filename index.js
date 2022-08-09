@@ -27,9 +27,8 @@ mongoose.connect(process.env.DATABASE_URL).then(async ()=>{
 
 
 
-app.set('view engine',"ejs")
+app.use(express.static('build'))
 app.use(cors())
-app.use(express.static("public"))
 app.use('/api', apiHandler)
 
 app.get("/",async (req,res)=>{

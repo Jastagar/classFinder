@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c5dffb6f.css",
+    "main.js": "/static/js/main.ccd8f887.js",
+    "static/media/g8.png": "/static/media/g8.3f633e89d97385692f02.png",
+    "static/media/g4.png": "/static/media/g4.489ee1de7d0b8a83de4b.png",
+    "static/media/g23.png": "/static/media/g23.e2b2e884c970e5af0c8f.png",
+    "static/media/g22.png": "/static/media/g22.29be32155869592f9d00.png",
+    "static/media/g10.png": "/static/media/g10.327caf3e5a6de526709b.png",
+    "static/media/g2.png": "/static/media/g2.0b3c82caff8fdb4b56a8.png",
+    "static/media/g18.png": "/static/media/g18.64f023c19fe3e579ea72.png",
+    "static/media/g9.png": "/static/media/g9.ef2c4c940aa236ff3a6c.png",
+    "static/media/g11.png": "/static/media/g11.757fac6e44d06dff69bd.png",
+    "static/media/g15.png": "/static/media/g15.dbcc22669aec7cc2c10b.png",
+    "static/media/g17.png": "/static/media/g17.29be967fdfd20753464e.png",
+    "static/media/g3.png": "/static/media/g3.da42da3393a5aa31d0c3.png",
+    "static/media/g21.png": "/static/media/g21.5ed5e1f696f36ad60d92.png",
+    "static/media/g24.png": "/static/media/g24.60eb3265e8044d5329d1.png",
+    "static/media/g5.png": "/static/media/g5.680b9d70a0154a86768b.png",
+    "static/media/g16.png": "/static/media/g16.9720b3ccc454d0960c90.png",
+    "static/media/g14.png": "/static/media/g14.ca30d828f790e0c24bff.png",
+    "static/media/g20.png": "/static/media/g20.f5225382158095df3efd.png",
+    "static/media/g12.png": "/static/media/g12.6d0741f1bc9abf114726.png",
+    "static/media/g7.png": "/static/media/g7.6aabfd6349e7075112c1.png",
+    "static/media/g13.png": "/static/media/g13.d0f1c5f42cb7ac1f2d14.png",
+    "static/media/g6.png": "/static/media/g6.fe5a0bb729cf2d773274.png",
+    "static/media/g1.png": "/static/media/g1.bb00626de8f7a8731caf.png",
+    "static/media/g19.png": "/static/media/g19.55e3aca23ca527aa15d6.png",
+    "index.html": "/index.html",
+    "main.c5dffb6f.css.map": "/static/css/main.c5dffb6f.css.map",
+    "main.ccd8f887.js.map": "/static/js/main.ccd8f887.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c5dffb6f.css",
+    "static/js/main.ccd8f887.js"
+  ]
+}
