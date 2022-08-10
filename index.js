@@ -7,34 +7,18 @@ const Daily = require("./models/daily")
 const Students = require("./models/student")
 const cors = require('cors')
 const apiHandler = require('./controller/api')
+const logic = require('./logic/script')
 
-async function getData(){
-    var dataArr;
-    var eachDaySchdule;
-    var studentsData;
-    await mongoose.connect(process.env.DATABASE_URL).then(async ()=>{
-        console.log("Connected to Database on Mongo")
-        console.log("Assigning data...")
-        dataArr = await Scdhule.find({});
-        eachDaySchdule = await Daily.find({});
-        studentsData = await Students.find({});
-        console.log("Data Assigned")
-        dataArr = dataArr.sort((a,b)=>{
-            return (a.class.slice(1) - b.class.slice(1))
-        })
-    }).catch((err)=>{
-        console.log("\nError Connecting to the DataBase:\n\n\n",err)
-    })
-}
-getData()
-
+console.log(logic.studentsData)
 
 app.use(express.static('build'))
 app.use(cors())
+
+
 app.use('/api', apiHandler)
 
 app.get("/",async (req,res)=>{
-    res.render('index',{eachDaySchdule, studentsData,dataArr});
+    res.send('Nothing here Yet');
 })
 
 
