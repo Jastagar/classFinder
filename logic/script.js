@@ -16,13 +16,17 @@ const secNow = timeNow.getHours()*3600 + timeNow.getMinutes()*60
 var dayToday = new Date().getDay()
 var defaultPeriod = false
 
-Mongo.connectToMongoose()
+var eachDaySchdule
+var studentsData
 
-const eachDaySchdule = Daily.find({})
-const studentsData =Students.find({})
+async function getData(){
+    Mongo.connectToMongoose()
+    eachDaySchdule = await Daily.find({})
+    studentsData = await Students.find({})
+    Mongo.closeConnection()
+}
+getData()
 
-console.log(eachDaySchdule)
-console.log(studentsData)
 
 
 testingFunctionSetDay("1","4")
@@ -52,17 +56,18 @@ function getQuery(day,period){
 }
 function getOccupiedClasses(day,period){
     if(days[dayToday] === "Sunday"){
-        showBox.innerHTML = `Its Sunday, no classes today :) `
-        return
+        
+        return ['err',`Its Sunday, no classes today :)`]
     }
     else if(days[dayToday] === "saturday"){
-        showBox.innerHTML = `Its Sunday, no classes today :)`
-        return
+        return ['err',`Its Saturday, no classes today :)`]
     }
     const numberForQuery = ((day-1)*9) + parseInt(period)-1
     const query = days[day] + period
     const classesInUse = eachDaySchdule[numberForQuery][query]
-    showBox.innerHTML=""
+    console.log(eachDaySchdule[numberForQuery])
+    console.log(query)
+    console.log(classesInUse)
     const mappedCIUarray = classesInUse.map((e)=>{
         return e.split("-")[2]
     })
@@ -70,7 +75,7 @@ function getOccupiedClasses(day,period){
     {
         return mappedCIUarray.indexOf(x)=== -1
     });
-    return res
+    return ['classes',res]
 }
 
 module.exports  = {
@@ -81,5 +86,6 @@ module.exports  = {
     allClassesEverUsed,
     officialNamesForSubjects,
     dayToday,
-    studentsData
+    studentsData,
+    eachDaySchdule
 }

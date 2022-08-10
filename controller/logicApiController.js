@@ -10,7 +10,7 @@ function handleQuickFind(){
         return result
     }
     const res = logicalFunctions.getOccupiedClasses(logicalFunctions.dayToday,logicalFunctions.getNowPeriod())
-    result=['classes',res]
+    result=res
     return [[((logicalFunctions.dayToday-1)*9),parseInt(logicalFunctions.getNowPeriod())]]
 }
 function handleStudentFind(queryRollnumber,queryName){
@@ -101,10 +101,11 @@ function handleGettingOccupiedClasses(){
     result(res)
 }
 
+setTimeout(handleQuickFind,1000)
 
-logicApiController.get("/:specific-student",(req,res)=>{
+logicApiController.get("/specific-student",(req,res)=>{
     
-    res.json(result)
+    res.json(logicalFunctions.studentsData)
 })
 
 
