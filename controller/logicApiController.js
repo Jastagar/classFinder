@@ -1,15 +1,16 @@
 const logicApiController = require('express').Router()
 const logicalFunctions = require('../logic/script')
-const Schdule = require('../models/schdules')
-const Daily = require("../models/daily")
 const Students = require("../models/student")
 
 var result = 'No button pressed yet'
+var dayToday=0
+var secNow=0
+
 
 async function singleStudentFind(found){
     var studentsClassInfo
-    if(logicalFunctions.getNowPeriod()){
-        const classData = await logicalFunctions.getQuery(logicalFunctions.dayToday,logicalFunctions.getNowPeriod())
+    if(logicalFunctions.getNowPeriod(secNow)){
+        const classData = await logicalFunctions.getQuery(dayToday,logicalFunctions.getNowPeriod(secNow))
         studentsClassInfo = classData.find((each)=>{
             return each[0]===found.group
         })
@@ -49,43 +50,55 @@ async function optimizedStudentFind(queryRL,queryN,querySurname){
 }
 
 async function handleQuickFind(){
-    if(!logicalFunctions.getNowPeriod()){
+    if(!logicalFunctions.getNowPeriod(secNow)){
         return ['err','You are not in Working Hour']
     }else{
-        return await logicalFunctions.getOccupiedClasses(logicalFunctions.dayToday,logicalFunctions.getNowPeriod())
+        return await logicalFunctions.getOccupiedClasses(dayToday,logicalFunctions.getNowPeriod(secNow),dayToday)
     }
 }
 
 async function handleQuickFindForNext(){
-    return await logicalFunctions.getOccupiedClasses(logicalFunctions.dayToday,`${parseInt(logicalFunctions.getNowPeriod())+1}`)
+    return await logicalFunctions.getOccupiedClasses(dayToday,`${parseInt(logicalFunctions.getNowPeriod(secNow))+1}`,dayToday)
 }
 
 async function handleGettingOccupiedClasses(day,period){
     var dayQuery = day
     const periodValue = period
-    if(dayQuery==="today"){dayQuery=logicalFunctions.dayToday}
-    return await logicalFunctions.getOccupiedClasses(dayQuery,periodValue)
+    if(dayQuery==="today"){dayQuery=dayToday}
+    return await logicalFunctions.getOccupiedClasses(dayQuery,periodValue,dayToday)
 }
 
-logicApiController.get("/quick",async (req,res)=>{
+logicApiController.get("/:secnow/:daytoday/quick",async (req,res)=>{
+    dayToday = parseInt(req.params.daytoday)
+    secNow = parseInt(req.params.secnow)
+    console.log(dayToday)
+    console.log(secNow)
     result = await handleQuickFind()
     res.json(result)
 })
-logicApiController.get("/student/:student",async (req,res)=>{
+logicApiController.get("/:secnow/:daytoday/student/:student",async (req,res)=>{
+    dayToday = parseInt(req.params.daytoday)
+    secNow = parseInt(req.params.secnow)
     const queryType = req.params.student
     queryType.slice(0,5)==='20109'? result = await optimizedStudentFind(queryType,'',false):result = await optimizedStudentFind('',queryType,false)
     res.json(result)
 })
-logicApiController.get("/student/:student/1",async (req,res)=>{
+logicApiController.get("/:secnow/:daytoday/student/:student/1",async (req,res)=>{
+    dayToday = parseInt(req.params.daytoday)
+    secNow = parseInt(req.params.secnow)
     const queryType = req.params.student
     queryType.slice(0,5)==='20109'? result = await optimizedStudentFind(queryType,'',true):result = await optimizedStudentFind('',queryType,true)
     res.json(result)
 })
-logicApiController.get("/quicknext",async (req,res)=>{
+logicApiController.get("/:secnow/:daytoday/quicknext",async (req,res)=>{
+    dayToday = parseInt(req.params.daytoday)
+    secNow = parseInt(req.params.secnow)
     result = await handleQuickFindForNext()
     res.json(result)
 })
-logicApiController.get("/find/:day/:period",async (req,res)=>{
+logicApiController.get("/:secnow/:daytoday/find/:day/:period",async (req,res)=>{
+    dayToday = parseInt(req.params.daytoday)
+    secNow = parseInt(req.params.secnow)
     console.log("Req recieved here")
     result = await handleGettingOccupiedClasses(req.params.day,req.params.period)
     res.json(result)
