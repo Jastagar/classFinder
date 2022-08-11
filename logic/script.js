@@ -21,21 +21,22 @@ var testing = false
 //     defaultPeriod = period; 
 //     testing=true
 // }
+var USTimeDelay = 37800
 
 
 function getNowPeriod() {
     if(testing){
         return defaultPeriod
     }
-    if(secNow>=32400 && secNow<35400) return '1'
-    else if(secNow>=35400 && secNow<38400) return '2'
-    else if(secNow>=38400 && secNow<41400) return '3'
-    else if(secNow>=41400 && secNow<44400) return '4'
-    else if(secNow>=44400 && secNow<47400) return '5'
-    else if(secNow>=47400 && secNow<50400) return '6'
-    else if(secNow>=50400 && secNow<53400) return '7'
-    else if(secNow>=53400 && secNow<56400) return '8'
-    else if(secNow>=56400 && secNow<59400) return '9'
+    if(secNow>=32400+USTimeDelay && secNow<35400+USTimeDelay) return '1'
+    else if(secNow>=35400+USTimeDelay && secNow<38400+USTimeDelay) return '2'
+    else if(secNow>=38400+USTimeDelay && secNow<41400+USTimeDelay) return '3'
+    else if(secNow>=41400+USTimeDelay && secNow<44400+USTimeDelay) return '4'
+    else if(secNow>=44400+USTimeDelay && secNow<47400+USTimeDelay) return '5'
+    else if(secNow>=47400+USTimeDelay && secNow<50400+USTimeDelay) return '6'
+    else if(secNow>=50400+USTimeDelay && secNow<53400+USTimeDelay) return '7'
+    else if(secNow>=53400+USTimeDelay && secNow<56400+USTimeDelay) return '8'
+    else if(secNow>=56400+USTimeDelay && secNow<59400+USTimeDelay) return '9'
     else return defaultPeriod
 }
 async function getQuery(day,period){
