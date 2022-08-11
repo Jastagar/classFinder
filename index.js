@@ -5,10 +5,12 @@ const cors = require('cors')
 const apiHandler = require('./controller/api')
 const logicApiController = require('./controller/logicApiController')
 const Mongo = require('./mongoose/mongooseConnection')
+const morgan = require('morgan')
 
 Mongo.connectToMongoose()
 
 app.use(express.json())
+app.use(morgan('tiny'))
 app.use(express.static('build'))
 app.use(cors())
 

@@ -58,7 +58,10 @@ async function handleQuickFind(){
 }
 
 async function handleQuickFindForNext(){
-    return await logicalFunctions.getOccupiedClasses(dayToday,`${parseInt(logicalFunctions.getNowPeriod(secNow))+1}`,dayToday)
+    if(!logicalFunctions.getNowPeriod(secNow)){
+        return ['err','You are not in Working Hour']
+    }
+    return await logicalFunctions.getOccupiedClasses(dayToday,parseInt(logicalFunctions.getNowPeriod(secNow))+1,dayToday)
 }
 
 async function handleGettingOccupiedClasses(day,period){
