@@ -1,111 +1,87 @@
 const logicApiController = require('express').Router()
 const logicalFunctions = require('../logic/script')
+const Schdule = require('../models/schdules')
+const Daily = require("../models/daily")
+const Students = require("../models/student")
 
 var result = 'No button pressed yet'
 
-function handleQuickFind(){
-    console.log('running Quick find')
-    if(!logicalFunctions.getNowPeriod()){
-        result= ['err','You are not in Working Hour']
-        return result
-    }
-    const res = logicalFunctions.getOccupiedClasses(logicalFunctions.dayToday,logicalFunctions.getNowPeriod())
-    result=res
-    return [[((logicalFunctions.dayToday-1)*9),parseInt(logicalFunctions.getNowPeriod())]]
-}
-function handleStudentFind(queryRollnumber,queryName){
-    const queryRL = queryRollnumber
-    const queryN = queryName
-    if((!queryRL || queryRL==="201099") && !queryN) {
-        result=['err',"Koi number ya naam toh daal do phele :|"]
-        return false
-    }
-    if(queryRL!=="201099" || !queryRL){
-        const found = studentsData.find((each)=>{
-            return each.rollnumber === queryRL
+async function singleStudentFind(found){
+    var studentsClassInfo
+    if(logicalFunctions.getNowPeriod()){
+        const classData = await logicalFunctions.getQuery(logicalFunctions.dayToday,logicalFunctions.getNowPeriod())
+        studentsClassInfo = classData.find((each)=>{
+            return each[0]===found.group
         })
+    }
+    if(!studentsClassInfo){
+        return ['user0',found.name,found.rollnumber,found.group]
+    }
+    const [,subject,classNumber,FCnumber] = studentsClassInfo
+    return ['user1',found.name,found.rollnumber,found.group,logicalFunctions.officialNamesForSubjects[subject][0],classNumber,FCnumber]
+}
+
+async function optimizedStudentFind(queryRL,queryN){
+    if((!queryRL || queryRL==="201099") && !queryN) {
+        return ['err',"Koi number ya naam toh daal do phele :|"]
+    }
+    if(queryRL){
+        const found = await Students.findOne({rollnumber:queryRL})
         if(found){
-            var studentsClassInfo
-            if(getNowPeriod()){
-                const classData = getQuery(dayToday,getNowPeriod())
-                const groupRex = new RegExp(found.group,"i")
-                studentsClassInfo = classData.find((each)=>{
-                    const ret = each.match(groupRex)
-                    return ret
-                })
-            }
-            if(!studentsClassInfo){
-                result = ['user0',found.name,found.rollnumber,found.group]
-                return false
-            }
-            var [group,subject,classNumber,FCnumber] = studentsClassInfo.split("-")
-            result= ['user1',found.name,found.rollnumber,found.group,officialNamesForSubjects[subject][0],classNumber,FCnumber]
-            return false
+            return singleStudentFind(found)
         }else{
-            result = ['err',"Please Check the number again"]
+            return ['err',"Please Check the number again"]
         }
     }else{
         const nameRegx = new RegExp(`^${queryN}`,"gi")
-        const serNameRegx = new RegExp(`${' '+queryN}`,"gi")
-        const found = studentsData.filter((each)=>{
-            if(each.name.toLowerCase().match(nameRegx) || each.name.toLowerCase().match(serNameRegx)){return each}
-        })
+        // const serNameRegx = new RegExp(`${' '+queryN}`,"gi")
+        const found = await Students.find({name:nameRegx})
         if(found.length === 1){
-            const singleFound = found[0]
-            var studentsClassInfo
-            if(getNowPeriod()){
-                const classData = getQuery(dayToday,getNowPeriod())
-                const groupRex = new RegExp(singleFound.group,"i")
-                studentsClassInfo = classData.find((each)=>{
-                    const ret = each.match(groupRex)
-                    return ret
-                })
-            }
-            if(!studentsClassInfo){
-                result = ['user0',singleFound.name,singleFound.rollnumber,singleFound.group]
-                return false
-            }
-            var [group,subject,classNumber,FCnumber] = studentsClassInfo.split("-")
-            result= ['user1',singleFound.name,singleFound.rollnumber,singleFound.group,officialNamesForSubjects[subject][0],classNumber,FCnumber]
-            return false
+            singleStudentFind(found[0])
         }else if(found.length>1){
-            var allNames = []
-            found.forEach((each)=>{
-                allNames.push(`<b>${each.name}</b> rollnumber <b>${each.rollnumber}</b> from <b>${each.group}</b><br><hr>`)
-            })
-            result = ['userM',found.length,...allNames]
+            return ['userM',found.length,...found]
         }else{
-            result = ['err',"Please Check the Name again"]
+            return ['err',"Please Check the Name again"]
         }
     }
 }
-function handleQuickFindForNext(){
-    const period = handleQuickFind()[1]+1
-    const dayNumber = handleQuickFind()[0]+1
-    const nextQuery = getOccupiedClasses(dayToday,`${period}`)
-    result = nextQuery
-}
-function handleGettingOccupiedClasses(){
-    if(days[dayToday] === "Sunday"){
-        result = ['err',`Its Sunday, no classes today :)`]
-        return
+
+async function handleQuickFind(){
+    if(!logicalFunctions.getNowPeriod()){
+        return ['err','You are not in Working Hour']
+    }else{
+        return await logicalFunctions.getOccupiedClasses(logicalFunctions.dayToday,logicalFunctions.getNowPeriod())
     }
-    else if(days[dayToday] === "saturday"){
-        result = ['err',`Its Sunday, no classes today :)`]
-        return
-    }
-    var dayQuery = document.querySelector("#dayQuery").value
-    const periodValue = document.getElementById("inputQuery").value
-    if(dayQuery==="today"){dayQuery=dayToday}
-    const res = getOccupiedClasses(dayQuery,periodValue)
-    result(res)
 }
 
-setTimeout(handleQuickFind,1000)
+async function handleQuickFindForNext(){
+    return await logicalFunctions.getOccupiedClasses(logicalFunctions.dayToday,`${parseInt(logicalFunctions.getNowPeriod())+1}`)
+}
 
-logicApiController.get("/specific-student",(req,res)=>{
-    
-    res.json(logicalFunctions.studentsData)
+async function handleGettingOccupiedClasses(day,period){
+    var dayQuery = day
+    const periodValue = period
+    if(dayQuery==="today"){dayQuery=logicalFunctions.dayToday}
+    return await logicalFunctions.getOccupiedClasses(dayQuery,periodValue)
+}
+
+logicApiController.get("/quick",async (req,res)=>{
+    result = await handleQuickFind()
+    res.json(result)
+})
+logicApiController.get("/student/:student",async (req,res)=>{
+    const queryType = req.params.student
+    queryType.slice(0,5)==='20109'? result = await optimizedStudentFind(queryType,''):result = await optimizedStudentFind('',queryType)
+    res.json(result)
+})
+logicApiController.get("/quicknext",async (req,res)=>{
+    result = await handleQuickFindForNext()
+    res.json(result)
+})
+logicApiController.get("/find/:day/:period",async (req,res)=>{
+    console.log("Req recieved here")
+    result = await handleGettingOccupiedClasses(req.params.day,req.params.period)
+    res.json(result)
 })
 
 

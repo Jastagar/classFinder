@@ -6,6 +6,8 @@ const apiHandler = require('./controller/api')
 const logicApiController = require('./controller/logicApiController')
 const Mongo = require('./mongoose/mongooseConnection')
 
+Mongo.connectToMongoose()
+
 app.use(express.static('build'))
 app.use(cors())
 

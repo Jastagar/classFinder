@@ -1,7 +1,4 @@
-const Mongo = require('../mongoose/mongooseConnection')
-const Schdule = require('../models/schdules')
 const Daily = require("../models/daily")
-const Students = require("../models/student")
 
 const days = ["Sunday","monday","tuesday","wednesday","thursday","friday","saturday"]
 const allClassesEverUsed = ['311', '312', '318', '322', '323', '402', '409', '410', '411', '417', '420', '421', '501', '502', '509', '510', '511']
@@ -15,29 +12,21 @@ const timeNow = new Date()
 const secNow = timeNow.getHours()*3600 + timeNow.getMinutes()*60
 var dayToday = new Date().getDay()
 var defaultPeriod = false
+var testing = false
 
-var eachDaySchdule
-var studentsData
+// testingFunctionSetDay("5","5")
 
-async function getData(){
-    Mongo.connectToMongoose()
-    eachDaySchdule = await Daily.find({})
-    studentsData = await Students.find({})
-    Mongo.closeConnection()
-}
-getData()
-
-
-
-testingFunctionSetDay("1","4")
-
-function testingFunctionSetDay(day,period){
-    dayToday = day;
-    defaultPeriod = period; 
-}
+// function testingFunctionSetDay(day,period){
+//     dayToday = day;
+//     defaultPeriod = period; 
+//     testing=true
+// }
 
 
 function getNowPeriod() {
+    if(testing){
+        return defaultPeriod
+    }
     if(secNow>=32400 && secNow<35400) return '1'
     else if(secNow>=35400 && secNow<38400) return '2'
     else if(secNow>=38400 && secNow<41400) return '3'
@@ -49,27 +38,23 @@ function getNowPeriod() {
     else if(secNow>=56400 && secNow<59400) return '9'
     else return defaultPeriod
 }
-function getQuery(day,period){
+async function getQuery(day,period){
     const numberForQuery = ((day-1)*9) + parseInt(period)-1
-    const query = days[day] + period
-    return eachDaySchdule[numberForQuery][query]
+    const eachDaySchdule = await Daily.findOne({index:numberForQuery})
+    return eachDaySchdule['classes']
 }
-function getOccupiedClasses(day,period){
+async function getOccupiedClasses(day,period){
     if(days[dayToday] === "Sunday"){
-        
         return ['err',`Its Sunday, no classes today :)`]
     }
     else if(days[dayToday] === "saturday"){
         return ['err',`Its Saturday, no classes today :)`]
     }
-    const numberForQuery = ((day-1)*9) + parseInt(period)-1
-    const query = days[day] + period
-    const classesInUse = eachDaySchdule[numberForQuery][query]
-    console.log(eachDaySchdule[numberForQuery])
-    console.log(query)
-    console.log(classesInUse)
+    const numberForQuery = ((day-1)*9) + parseInt(period)
+    const eachDaySchdule = await Daily.findOne({index:numberForQuery})
+    const classesInUse = eachDaySchdule['classes']
     const mappedCIUarray = classesInUse.map((e)=>{
-        return e.split("-")[2]
+        return e[2]
     })
     let res = allClassesEverUsed.filter(x =>
     {
@@ -82,10 +67,6 @@ module.exports  = {
     getQuery,
     getOccupiedClasses,
     getNowPeriod,
-    days,
-    allClassesEverUsed,
     officialNamesForSubjects,
-    dayToday,
-    studentsData,
-    eachDaySchdule
+    dayToday
 }
