@@ -8,6 +8,7 @@ const Mongo = require('./mongoose/mongooseConnection')
 
 Mongo.connectToMongoose()
 
+app.use(express.json())
 app.use(express.static('build'))
 app.use(cors())
 

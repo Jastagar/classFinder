@@ -21,7 +21,7 @@ async function singleStudentFind(found){
     return ['user1',found.name,found.rollnumber,found.group,logicalFunctions.officialNamesForSubjects[subject][0],classNumber,FCnumber]
 }
 
-async function optimizedStudentFind(queryRL,queryN){
+async function optimizedStudentFind(queryRL,queryN,querySurname){
     if((!queryRL || queryRL==="201099") && !queryN) {
         return ['err',"Koi number ya naam toh daal do phele :|"]
     }
@@ -33,13 +33,15 @@ async function optimizedStudentFind(queryRL,queryN){
             return ['err',"Please Check the number again"]
         }
     }else{
-        const nameRegx = new RegExp(`^${queryN}`,"gi")
-        // const serNameRegx = new RegExp(`${' '+queryN}`,"gi")
+        const nameRegx = querySurname? new RegExp(`${' '+queryN}`,"gi"):new RegExp(`^${queryN}`,"gi")
         const found = await Students.find({name:nameRegx})
         if(found.length === 1){
-            singleStudentFind(found[0])
+            return singleStudentFind(found[0])
         }else if(found.length>1){
-            return ['userM',found.length,...found]
+            const mappedFound = found.map((e)=>{
+                return [e.name,e.rollnumber,e.group]
+            })
+            return ['userM','Be more specific with the name or use Rollnumber',found.length,...mappedFound]
         }else{
             return ['err',"Please Check the Name again"]
         }
@@ -71,7 +73,12 @@ logicApiController.get("/quick",async (req,res)=>{
 })
 logicApiController.get("/student/:student",async (req,res)=>{
     const queryType = req.params.student
-    queryType.slice(0,5)==='20109'? result = await optimizedStudentFind(queryType,''):result = await optimizedStudentFind('',queryType)
+    queryType.slice(0,5)==='20109'? result = await optimizedStudentFind(queryType,'',false):result = await optimizedStudentFind('',queryType,false)
+    res.json(result)
+})
+logicApiController.get("/student/:student/1",async (req,res)=>{
+    const queryType = req.params.student
+    queryType.slice(0,5)==='20109'? result = await optimizedStudentFind(queryType,'',true):result = await optimizedStudentFind('',queryType,true)
     res.json(result)
 })
 logicApiController.get("/quicknext",async (req,res)=>{
